@@ -27,13 +27,13 @@ export const Kontakt = () => {
       });
 
       if (!response.ok) {
-        throw new Error("request_failed");
+        throw new Error("Anfrage fehlgeschlagen");
       }
 
       event.currentTarget.reset();
       setStatus("success");
     } catch (error) {
-      console.error(error);
+      console.error("Senden fehlgeschlagen", error);
       setStatus("error");
     }
   };
@@ -87,7 +87,17 @@ export const Kontakt = () => {
               <div className="form-grid">
                 <div>
                   <label htmlFor="name">Name</label>
-                  <input id="name" name="name" type="text" placeholder="Vorname Nachname" required />
+                  <input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Vorname Nachname"
+                    required
+                    onInvalid={(event) =>
+                      event.target.setCustomValidity("Bitte geben Sie Ihren Namen ein.")
+                    }
+                    onInput={(event) => event.target.setCustomValidity("")}
+                  />
                 </div>
                 <div>
                   <label htmlFor="firma">Firma (optional)</label>
@@ -101,7 +111,19 @@ export const Kontakt = () => {
                 </div>
                 <div>
                   <label htmlFor="email">E-Mail</label>
-                  <input id="email" name="email" type="email" placeholder="name@beispiel.ch" required />
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    placeholder="name@beispiel.ch"
+                    required
+                    onInvalid={(event) =>
+                      event.currentTarget.setCustomValidity(
+                        "Bitte geben Sie eine gültige E-Mail-Adresse ein (mit @)."
+                      )
+                    }
+                    onInput={(event) => event.currentTarget.setCustomValidity("")}
+                  />
                 </div>
               </div>
               <div>
@@ -122,6 +144,10 @@ export const Kontakt = () => {
                   name="nachricht"
                   placeholder="Beschreiben Sie Ihr Projekt oder Ihre Anfrage."
                   required
+                  onInvalid={(event) =>
+                    event.target.setCustomValidity("Bitte geben Sie eine Nachricht ein.")
+                  }
+                  onInput={(event) => event.target.setCustomValidity("")}
                 ></textarea>
               </div>
               <button className="btn btn-primary" type="submit" disabled={status === "pending"}>

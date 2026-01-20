@@ -116,6 +116,24 @@ a {
   width: 100%;
 }
 
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  gap: 6px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+  margin-left: auto;
+}
+
+.nav-toggle span {
+  width: 26px;
+  height: 2px;
+  background: var(--charcoal);
+  border-radius: 999px;
+}
+
 .hero {
   position: relative;
   padding: 6rem 0 4rem;
@@ -642,9 +660,36 @@ label {
 
 @media (max-width: 860px) {
   .nav-links {
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    gap: 1rem;
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: var(--white);
+    border: 1px solid var(--cloud);
+    border-radius: 16px;
+    padding: 1rem 1.25rem;
+    flex-direction: column;
+    gap: 0.8rem;
+    box-shadow: var(--shadow);
+    min-width: 220px;
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-10px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  .nav-links.is-open {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+
+  .nav-toggle {
+    display: flex;
+  }
+
+  .header-inner {
+    position: relative;
+    width: 100%;
   }
 
   .cta-band {
@@ -654,8 +699,9 @@ label {
 
 @media (max-width: 680px) {
   .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
   }
 
   .hero {

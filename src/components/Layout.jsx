@@ -1,5 +1,5 @@
 import { NavLink, Link, Outlet, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const navItems = [
   { to: "/", label: "Startseite" },
@@ -36,9 +36,11 @@ const initReveal = () => {
 
 export const Layout = () => {
   const location = useLocation();
+  const [isNavOpen, setIsNavOpen] = useState(false);
 
   useEffect(() => {
     initReveal();
+    setIsNavOpen(false);
   }, [location.pathname]);
 
   return (
@@ -58,7 +60,18 @@ export const Layout = () => {
           <Link className="logo" to="/">
             <img src="/assets/logo.png" alt="Elektro Lang GmbH Logo" />
           </Link>
-          <nav className="nav-links">
+          <button
+            type="button"
+            className="nav-toggle"
+            aria-label="Menü öffnen"
+            aria-expanded={isNavOpen}
+            onClick={() => setIsNavOpen((prev) => !prev)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+          <nav className={`nav-links ${isNavOpen ? "is-open" : ""}`}>
             {navItems.map((item) => (
               <NavLink
                 key={item.to}
